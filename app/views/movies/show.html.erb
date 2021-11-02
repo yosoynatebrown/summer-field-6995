@@ -2,6 +2,7 @@
 <h4><%= @movie.creation_year %> </h4>
 <h4><%= @movie.genre %> </h4>
 
+<h4>Cast: </h4>
 <% @movie.actors.order_by_age.each do |actor| %>
   <p><%= actor.name %></p>
 <% end %>

@@ -1,6 +1,6 @@
 <% @studios.each do |studio| %>
 <div id="studio-<%= studio.id %>">
-  <h3><%= studio.name %> -- <%= studio.location %></h3>
+  <h3><%= studio.name %> (<%= studio.location %>)</h3>
   <% studio.movies.each do |movie| %>
   <p><%= movie.title %></p>
   <% end %>
