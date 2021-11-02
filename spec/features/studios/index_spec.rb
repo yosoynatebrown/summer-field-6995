@@ -23,10 +23,14 @@ RSpec.describe 'Studio index page' do
   end
 
   it "has the titles of all movies the studio produced" do
-    expect(page).to have_content(@ark.title)
-    expect(page).to have_content(@shrek.title)
+    within "#studio-#{@universal.id}" do
+      expect(page).to have_content(@ark.title)
+      expect(page).to have_content(@shrek.title)
+    end
 
-    expect(page).to have_content(@matrix.title)
-    expect(page).to have_content(@star_wars.title)
+    within "#studio-#{@disney.id}" do
+      expect(page).to have_content(@matrix.title)
+      expect(page).to have_content(@star_wars.title)
+    end
   end
 end
