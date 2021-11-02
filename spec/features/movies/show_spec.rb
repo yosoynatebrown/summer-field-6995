@@ -35,19 +35,31 @@ RSpec.describe 'Movies show page' do
     expect(page.text.index(@keanu.name)).to be > page.text.index(@jamie.name)
   end
 
-  it "should list all actors from youngest to oldest" do
+  it "should list actors' average age" do
     expect(page).to have_content(@ark.actors.average_age)
   end
 
   it "shouldn't have actors from a different movie" do
     expect(page).not_to have_content(@adam.name)
   end
+  describe "form to add an actor" do
+    context "when actor exists" do
+      it "should add an actor" do
+        fill_in 'Name', with: 'Adam Sandler'
+        click_button 'Submit'
 
-  it "should have a working form to add an actor" do
-    fill_in 'Name', with: 'Adam Sandler'
-    click_button 'Submit'
+        expect(current_path).to eq("/movies/#{@ark.id}")
+        expect(page).to have_content(@adam.name)
+      end
+    end
+    context "when actor doesn't exist in database" do
+      it "redirects to movie show page without adding actor" do
+        fill_in 'Name', with: 'Nate Brown'
+        click_button 'Submit'
 
-    expect(current_path).to eq("/movies/#{@ark.id}")
-    expect(page).to have_content(@adam.name)
+        expect(current_path).to eq("/movies/#{@ark.id}")
+        expect(page).not_to have_content("Nate Brown")
+      end
+    end
   end
 end

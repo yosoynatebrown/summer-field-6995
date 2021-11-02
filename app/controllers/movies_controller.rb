@@ -6,8 +6,11 @@ class MoviesController < ApplicationController
   def update
     @movie = Movie.find(params[:id])
     actor = Actor.find_by(name: params[:name])
-    @movie.actors << actor
-
-    redirect_to "/movies/#{@movie.id}"
+    if actor.nil?
+      redirect_to "/movies/#{@movie.id}"
+    else
+      @movie.actors << actor
+      redirect_to "/movies/#{@movie.id}"
+    end
   end
 end

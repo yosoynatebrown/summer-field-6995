@@ -26,6 +26,9 @@ RSpec.describe 'Studio index page' do
     within "#studio-#{@universal.id}" do
       expect(page).to have_content(@ark.title)
       expect(page).to have_content(@shrek.title)
+
+      expect(page).not_to have_content(@matrix.title)
+      expect(page).not_to have_content(@star_wars.title)
     end
 
     within "#studio-#{@disney.id}" do
