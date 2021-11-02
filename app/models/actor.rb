@@ -11,14 +11,8 @@ class Actor < ApplicationRecord
   end
 
   def coactors
-    coactors = []
-    movies.each do |movie|
-      movie.actors.each do |actor|
-        coactors << actor
-      end
-    end
-    coactors.uniq!
-    coactors -= [self]
-    coactors
+    movie_ids = ActorMovie.where(actor_id: self.id).pluck(:movie_id)
+    actor_ids = ActorMovie.where(movie_id: movie_ids).pluck(:actor_id)
+    Actor.where(id: actor_ids).where.not(id: self.id).distinct
   end
 end
